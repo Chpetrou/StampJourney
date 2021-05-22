@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="18154" systemVersion="20D91" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Continent" representedClassName="Continent" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="isDeprecated" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="countries" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Country" inverseName="continent" inverseEntity="Country"/>
+    </entity>
+    <entity name="Country" representedClassName="Country" syncable="YES">
+        <attribute name="code31661Alpha2" optional="YES" attributeType="String"/>
+        <attribute name="code31661Alpha3" optional="YES" attributeType="String"/>
+        <attribute name="code31661Num" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="codeIana" optional="YES" attributeType="String"/>
+        <attribute name="codeTir" optional="YES" attributeType="String"/>
+        <attribute name="continentID" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="isDeprecated" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="officialName" optional="YES" attributeType="String"/>
+        <attribute name="parentID" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="predecessorID" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="successorID" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="child" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Country" inverseName="parent" inverseEntity="Country"/>
+        <relationship name="continent" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Continent" inverseName="countries" inverseEntity="Continent"/>
+        <relationship name="parent" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Country" inverseName="child" inverseEntity="Country"/>
+        <relationship name="predecessor" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Country" inverseName="successor" inverseEntity="Country"/>
+        <relationship name="stampEntities" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Entity" inverseName="country" inverseEntity="Entity"/>
+        <relationship name="successor" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Country" inverseName="predecessor" inverseEntity="Country"/>
+    </entity>
+    <entity name="Entity" representedClassName="Entity" syncable="YES">
+        <attribute name="countryID" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="countryPlace" optional="YES" attributeType="String"/>
+        <attribute name="date" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="isDeprecated" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="regimeSubauthority" optional="YES" attributeType="String"/>
+        <attribute name="scott" optional="YES" attributeType="String"/>
+        <relationship name="comments" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EntityComment" inverseName="stampEntity" inverseEntity="EntityComment"/>
+        <relationship name="country" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Country" inverseName="stampEntities" inverseEntity="Country"/>
+        <relationship name="seeAlso" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EntitySeeAlso" inverseName="stampEntity" inverseEntity="EntitySeeAlso"/>
+        <relationship name="sourceInfo" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EntitySourceInfo" inverseName="stampEntity" inverseEntity="EntitySourceInfo"/>
+        <relationship name="stampGroups" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="StampGroup" inverseName="stampEntity" inverseEntity="StampGroup"/>
+        <fetchedProperty name="ownedEntityList" optional="YES">
+            <fetchRequest name="fetchedPropertyFetchRequest" entity="OwnedEntity" predicateString="entityId == $FETCH_SOURCE.id"/>
+        </fetchedProperty>
+    </entity>
+    <entity name="EntityComment" representedClassName="EntityComment" syncable="YES">
+        <attribute name="comment" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="stampEntityID" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="stampEntity" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Entity" inverseName="comments" inverseEntity="Entity"/>
+    </entity>
+    <entity name="EntitySeeAlso" representedClassName="EntitySeeAlso" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="seeAlso" optional="YES" attributeType="String"/>
+        <attribute name="stampEntityID" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="stampEntity" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Entity" inverseName="seeAlso" inverseEntity="Entity"/>
+    </entity>
+    <entity name="EntitySourceInfo" representedClassName="EntitySourceInfo" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="sourceInfo" optional="YES" attributeType="String"/>
+        <attribute name="stampEntityID" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="stampEntity" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Entity" inverseName="sourceInfo" inverseEntity="Entity"/>
+    </entity>
+    <entity name="OwnedEntity" representedClassName="OwnedEntity" syncable="YES">
+        <attribute name="entityId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="ownedStampsCounter" optional="YES" attributeType="Integer 16" defaultValueString="0"/>
+        <relationship name="ownedStampGroups" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="OwnedStampGroup" inverseName="ownedEntity" inverseEntity="OwnedStampGroup"/>
+    </entity>
+    <entity name="OwnedStamp" representedClassName="OwnedStamp" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="quantity" optional="YES" attributeType="Integer 16" defaultValueString="1" usesScalarValueType="YES"/>
+        <attribute name="stampId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="ownedStampGroup" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="OwnedStampGroup" inverseName="ownedStamps" inverseEntity="OwnedStampGroup"/>
+    </entity>
+    <entity name="OwnedStampGroup" representedClassName="OwnedStampGroup" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="ownedStampsCounter" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="stampGroupId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="ownedEntity" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="OwnedEntity" inverseName="ownedStampGroups" inverseEntity="OwnedEntity"/>
+        <relationship name="ownedStamps" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="OwnedStamp" inverseName="ownedStampGroup" inverseEntity="OwnedStamp"/>
+        <fetchedProperty name="stampGroupList" optional="YES">
+            <fetchRequest name="fetchedPropertyFetchRequest" entity="StampGroup" predicateString="id == $FETCH_SOURCE.stampGroupId"/>
+        </fetchedProperty>
+    </entity>
+    <entity name="Stamp" representedClassName="Stamp" syncable="YES">
+        <attribute name="color" optional="YES" attributeType="String"/>
+        <attribute name="currency" optional="YES" attributeType="String"/>
+        <attribute name="dateOfIssue" optional="YES" attributeType="String"/>
+        <attribute name="denominationCurrency" optional="YES" attributeType="String"/>
+        <attribute name="denominationValue" optional="YES" attributeType="String"/>
+        <attribute name="descriptionText" optional="YES" attributeType="String"/>
+        <attribute name="design" optional="YES" attributeType="String"/>
+        <attribute name="engraving" optional="YES" attributeType="String"/>
+        <attribute name="heightWidth" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="imagePath" optional="YES" attributeType="URI"/>
+        <attribute name="imageUrl" optional="YES" attributeType="URI"/>
+        <attribute name="letterFdc" optional="YES" attributeType="String"/>
+        <attribute name="mintCondition" optional="YES" attributeType="String"/>
+        <attribute name="perforations" optional="YES" attributeType="String"/>
+        <attribute name="sheetSize" optional="YES" attributeType="String"/>
+        <attribute name="stampGroupID" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="stampNo" optional="YES" attributeType="String"/>
+        <attribute name="stampsIssued" optional="YES" attributeType="String"/>
+        <attribute name="stampType" optional="YES" attributeType="String"/>
+        <attribute name="stampUnused" optional="YES" attributeType="String"/>
+        <attribute name="stampUsed" optional="YES" attributeType="String"/>
+        <attribute name="theme" optional="YES" attributeType="String"/>
+        <relationship name="stampGroup" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="StampGroup" inverseName="stamps" inverseEntity="StampGroup"/>
+        <fetchedProperty name="ownedStampList" optional="YES">
+            <fetchRequest name="fetchedPropertyFetchRequest" entity="OwnedStamp" predicateString="stampId == $FETCH_SOURCE.id"/>
+        </fetchedProperty>
+    </entity>
+    <entity name="StampGroup" representedClassName="StampGroup" syncable="YES">
+        <attribute name="design" optional="YES" attributeType="String"/>
+        <attribute name="engraving" optional="YES" attributeType="String"/>
+        <attribute name="fromDateIssued" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="generalDate" optional="YES" attributeType="String"/>
+        <attribute name="groupNo" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="perforation" optional="YES" attributeType="String"/>
+        <attribute name="sheetsize" optional="YES" attributeType="String"/>
+        <attribute name="stampEntityID" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="toDateIssued" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="type" optional="YES" attributeType="String"/>
+        <attribute name="watermarkPath" optional="YES" attributeType="URI"/>
+        <attribute name="watermarkUrl" optional="YES" attributeType="URI"/>
+        <attribute name="wm" optional="YES" attributeType="String"/>
+        <relationship name="stampEntity" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Entity" inverseName="stampGroups" inverseEntity="Entity"/>
+        <relationship name="stampGroupImages" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="StampGroupImage" inverseName="stampGroup" inverseEntity="StampGroupImage"/>
+        <relationship name="stamps" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Stamp" inverseName="stampGroup" inverseEntity="Stamp"/>
+        <fetchedProperty name="ownedStampGroupList" optional="YES">
+            <fetchRequest name="fetchedPropertyFetchRequest" entity="OwnedStampGroup" predicateString="stampGroupId == $FETCH_SOURCE.id"/>
+        </fetchedProperty>
+    </entity>
+    <entity name="StampGroupImage" representedClassName="StampGroupImage" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="imagePath" optional="YES" attributeType="URI"/>
+        <attribute name="imageUrl" optional="YES" attributeType="URI"/>
+        <attribute name="stampGroupID" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="stampGroup" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="StampGroup" inverseName="stampGroupImages" inverseEntity="StampGroup"/>
+    </entity>
+    <fetchRequest name="StampEntityLimit10" entity="StampGroup" predicateString="id &lt; 30" fetchLimit="10"/>
+    <configuration name="OwnedDatabase" usedWithCloudKit="YES">
+        <memberEntity name="OwnedStamp"/>
+        <memberEntity name="OwnedStampGroup"/>
+        <memberEntity name="OwnedEntity"/>
+    </configuration>
+    <configuration name="StampDatabase">
+        <memberEntity name="Continent"/>
+        <memberEntity name="Country"/>
+        <memberEntity name="Entity"/>
+        <memberEntity name="EntityComment"/>
+        <memberEntity name="EntitySeeAlso"/>
+        <memberEntity name="EntitySourceInfo"/>
+        <memberEntity name="Stamp"/>
+        <memberEntity name="StampGroup"/>
+        <memberEntity name="StampGroupImage"/>
+    </configuration>
+    <elements>
+        <element name="Continent" positionX="-598.3199462890625" positionY="186.895751953125" width="128" height="89"/>
+        <element name="Country" positionX="-353.9296264648438" positionY="62.27667236328125" width="128" height="314"/>
+        <element name="Entity" positionX="-83.8446044921875" positionY="76.59463500976562" width="128" height="230"/>
+        <element name="EntityComment" positionX="-243.9786376953125" positionY="-93.04443359375" width="128" height="89"/>
+        <element name="EntitySeeAlso" positionX="233.7103271484375" positionY="0.112152099609375" width="128" height="89"/>
+        <element name="EntitySourceInfo" positionX="-38.6285400390625" positionY="-95.15303039550781" width="128" height="89"/>
+        <element name="OwnedEntity" positionX="-396" positionY="63" width="128" height="89"/>
+        <element name="OwnedStamp" positionX="-396" positionY="63" width="128" height="89"/>
+        <element name="OwnedStampGroup" positionX="-387" positionY="72" width="128" height="125"/>
+        <element name="Stamp" positionX="406.4083251953125" positionY="139.1019287109375" width="128" height="410"/>
+        <element name="StampGroup" positionX="156.3570556640625" positionY="318.7500305175781" width="128" height="320"/>
+        <element name="StampGroupImage" positionX="-181.9125366210938" positionY="579.1273345947266" width="128" height="104"/>
+    </elements>
+</model>
